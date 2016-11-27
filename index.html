@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link data-require="font-awesome@4.5.0" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
+  <script data-require="jquery@2.2.0" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script data-require="angularjs@1.5.8" data-semver="1.5.8" src="https://opensource.keycdn.com/angularjs/1.5.8/angular.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js"></script>
+  <script src="dirPagination.js"></script>
+</head>
+
+<body ng-app="labDatatables" ng-controller="datatablesController as vm">
+  <div class="container">
+    <div class="alert alert-info">
+      <p>Sort Type: {{ vm.sortType }}</p>
+      <p>Sort Reverse: {{ vm.sortReverse }}</p>
+      <p>Search Query: {{ vm.searchText }}</p>
+    </div>
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </div>
+          <input type="text" class="form-control" placeholder="Search" ng-model="vm.searchText" />
+        </div>
+      </div>
+    </form>
+    <dir-pagination-controls></dir-pagination-controls>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <td>
+            <a href="#" ng-click="vm.sortType = 'name'; vm.sortReverse=!vm.sortReverse">
+            Name
+            <span ng-show="vm.sortType == 'name' && !vm.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="vm.sortType == 'name' && vm.sortReverse" class="fa fa-caret-up"></span>                           
+            </a>
+          </td>
+          <td> Email</td>
+          <td> Status</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr dir-paginate="request in vm.requests |orderBy: vm.sortType:vm.sortReverse |filter:vm.searchText | itemsPerPage:5">
+          <td>{{request.name}}</td>
+          <td>{{request.email}}</td>
+          <td>{{request.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</body>
+
+</html>
